@@ -1,0 +1,468 @@
+/* ==========================================================
+   Forum Diskusi
+   Palet : tinta biru-tua, kertas biru-pucat, indigo (aksi),
+           kuning kunyit (penanda), koral (tidak suka)
+   Huruf : Bricolage Grotesque (judul), Figtree (isi)
+   ========================================================== */
+
+:root {
+  --ink: #14213d;
+  --paper: #eef2f9;
+  --surface: #ffffff;
+  --line: #d8dfee;
+  --muted: #52607a;
+  --primary: #3a4fd7;
+  --primary-dark: #2a3aa8;
+  --primary-tint: #e6e9fb;
+  --marigold: #f2b01e;
+  --coral: #c23a32;
+
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 { margin: 0 0 1.25rem; font-size: clamp(1.7rem, 4vw, 2.25rem); font-weight: 700; }
+h2 { margin: 0 0 0.75rem; font-size: 1.25rem; font-weight: 600; }
+
+a { color: var(--primary); }
+a:hover { color: var(--primary-dark); }
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Tata letak ---------- */
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem max(1rem, calc((100% - 760px) / 2));
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navbar__brand:hover { color: #ffffff; }
+
+/* Tanda merek berbentuk balon percakapan */
+.navbar__brand::before {
+  content: '';
+  width: 1.1rem;
+  height: 1.1rem;
+  background: var(--marigold);
+  border-radius: 7px 7px 7px 1px;
+}
+
+.navbar__menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar__user { color: #c9d3ea; font-weight: 600; }
+
+.navbar .button--ghost {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+
+.navbar .button--ghost:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.navbar .button:not(.button--ghost) {
+  border-color: var(--marigold);
+  background: var(--marigold);
+  color: var(--ink);
+}
+
+.navbar .button:not(.button--ghost):hover { background: #ffc23d; }
+
+/* ---------- Tombol ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  background: var(--primary);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.button:hover {
+  border-color: var(--primary-dark);
+  background: var(--primary-dark);
+  color: #ffffff;
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--primary);
+}
+
+.button--ghost:hover {
+  background: var(--primary-tint);
+  color: var(--primary-dark);
+}
+
+/* ---------- Formulir ---------- */
+
+.form { display: grid; gap: 1.1rem; margin-bottom: 1.25rem; }
+
+.form label { display: grid; gap: 0.35rem; font-weight: 600; }
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #b9c3da;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 400;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-color: var(--primary);
+  outline: 3px solid var(--primary-tint);
+}
+
+.form textarea { resize: vertical; }
+
+.form .button { justify-self: start; }
+
+.form__error {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-left: 4px solid var(--coral);
+  border-radius: 4px;
+  background: #fbeceb;
+  color: #8f1f19;
+}
+
+/* Kartu masuk/daftar: satu-satunya elemen yang diberi bayangan */
+.auth {
+  max-width: 420px;
+  margin: 1.5rem auto;
+  padding: 2rem 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px -16px rgba(20, 33, 61, 0.35);
+}
+
+/* ---------- Loading ---------- */
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  overflow: hidden;
+  background: transparent;
+  z-index: 10;
+}
+
+.loading__bar {
+  width: 40%;
+  height: 100%;
+  background: var(--marigold);
+  animation: slide 1s ease-in-out infinite;
+}
+
+@keyframes slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+
+/* ---------- Filter kategori ---------- */
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.chip {
+  min-height: 2.25rem;
+  padding: 0.2rem 0.9rem;
+  border: 1px solid #b9c3da;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.chip:hover { border-color: var(--ink); }
+
+.chip[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #ffffff;
+}
+
+/* ---------- Daftar & detail thread ---------- */
+
+.thread-list { display: grid; gap: 0.9rem; }
+
+.thread-item {
+  padding: 1.15rem 1.35rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: border-color 0.15s;
+}
+
+.thread-item:hover { border-color: var(--primary); }
+
+.thread-item__category {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  padding: 0.05rem 0.6rem;
+  border-radius: 6px;
+  background: var(--primary-tint);
+  color: var(--primary-dark);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.thread-item__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.thread-item__title a { color: var(--ink); text-decoration: none; }
+.thread-item__title a:hover { color: var(--primary); text-decoration: underline; }
+
+.thread-item__snippet { margin: 0 0 0.9rem; color: var(--muted); }
+
+.thread-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Garis pemisah memisahkan isi dari keterangan penulis */
+.thread-item .thread-item__meta,
+.thread-detail .thread-item__meta {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.thread-item__owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.thread-item__owner img {
+  border-radius: 50%;
+  background: var(--primary-tint);
+  object-fit: cover;
+}
+
+.thread-detail {
+  margin-bottom: 2rem;
+  padding: 1.6rem 1.75rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.thread-detail h1 { margin-bottom: 0.9rem; }
+
+.thread-detail .text-body {
+  max-width: 65ch;
+  margin: 0 0 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.text-body { white-space: pre-line; overflow-wrap: anywhere; }
+
+/* ---------- Komentar ---------- */
+
+.comment-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Sudut kiri-atas yang lancip memberi kesan balon percakapan */
+.comment-item {
+  padding: 0.95rem 1.2rem 0.8rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px 16px 16px 16px;
+}
+
+.comment-item .thread-item__meta { margin-bottom: 0.4rem; }
+.comment-item .text-body { margin: 0 0 0.7rem; }
+.comment-item .vote-buttons { margin: 0; }
+
+/* ---------- Vote ---------- */
+
+.vote-buttons { display: flex; gap: 0.5rem; margin: 0 0 0.9rem; }
+
+.vote-button {
+  min-width: 3.4rem;
+  min-height: 2rem;
+  padding: 0.1rem 0.75rem;
+  border: 1px solid #b9c3da;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.vote-button:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+.vote-button:disabled { cursor: not-allowed; opacity: 0.6; }
+
+.vote-button--up,
+.vote-button--up:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.vote-button--down,
+.vote-button--down:hover:not(:disabled) {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #ffffff;
+}
+
+/* ---------- Papan peringkat ---------- */
+
+.leaderboard {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1.2rem 0.8rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.leaderboard-item__rank {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--primary-tint);
+  color: var(--primary-dark);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.leaderboard-item:nth-child(1) .leaderboard-item__rank { background: var(--marigold); color: var(--ink); }
+.leaderboard-item:nth-child(2) .leaderboard-item__rank { background: #cdd5e5; color: var(--ink); }
+.leaderboard-item:nth-child(3) .leaderboard-item__rank { background: #e0b48b; color: var(--ink); }
+
+.leaderboard-item__score {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* ---------- Layar kecil & preferensi gerak ---------- */
+
+@media (max-width: 480px) {
+  .container { padding-top: 1.25rem; }
+  .auth { padding: 1.5rem 1.1rem; }
+  .thread-detail { padding: 1.2rem 1.1rem 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .loading__bar { animation: none; width: 100%; }
+}
